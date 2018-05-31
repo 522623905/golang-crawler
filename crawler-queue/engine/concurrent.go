@@ -9,8 +9,8 @@ type ConcurrentEngine struct {
 
 type Scheduler interface {
 	Submit(Request)
-	ConfigureMasterWorkerChan(chan Request)
-	WorkerReadr(w chan Request)
+	workerChan() chan Request
+	WorkerReady(w chan Request)
 	Run()
 }
 
@@ -20,7 +20,8 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 
 	//创建工作协程负责解析in请求，并返回解析结果给out
 	for i := 0; i < e.WorkerCount; i++ {
-		createWorker(out, e.Scheduler)
+		createWorker(e.Scheduler.workerChan(),
+			out, e.Scheduler)
 	}
 
 	//循环遍历传入的request，并递交给in chan,则createWorker()阻塞等待的请求得以运行
@@ -42,12 +43,12 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 }
 
 //工作协程,等待请求，并解析返回结果
-func createWorker(out chan ParseResult, s Scheduler) {
-	in := make(chan Request)
+func createWorker(in chan Request,
+	out chan ParseResult, s Scheduler) {
 	go func() {
 		for {
 			//tell scheduler i'm ready
-			s.WorkerReadr(in)
+			s.WorkerReady(in)
 			request := <-in                //阻塞等待有请求到来
 			result, err := worker(request) //解析请求，返回结果集
 			if err != nil {
