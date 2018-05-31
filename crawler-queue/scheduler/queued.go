@@ -11,7 +11,7 @@ func (s *QueuedScheduler) Submit(r engine.Request) {
 	s.requestChan <- r
 }
 
-func (s *QueuedScheduler) WorkerReadr(w chan engine.Request) {
+func (s *QueuedScheduler) WorkerReady(w chan engine.Request) {
 	s.workerChan <- w
 }
 

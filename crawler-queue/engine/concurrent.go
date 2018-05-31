@@ -8,10 +8,14 @@ type ConcurrentEngine struct {
 }
 
 type Scheduler interface {
+	ReadyNotifier
 	Submit(Request)
-	workerChan() chan Request
-	WorkerReady(w chan Request)
+	WorkerChan() chan Request
 	Run()
+}
+
+type ReadyNotifier interface {
+	WorkerReady(w chan Request)
 }
 
 func (e *ConcurrentEngine) Run(seeds ...Request) {
@@ -20,7 +24,7 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 
 	//创建工作协程负责解析in请求，并返回解析结果给out
 	for i := 0; i < e.WorkerCount; i++ {
-		createWorker(e.Scheduler.workerChan(),
+		createWorker(e.Scheduler.WorkerChan(),
 			out, e.Scheduler)
 	}
 
@@ -44,11 +48,11 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 
 //工作协程,等待请求，并解析返回结果
 func createWorker(in chan Request,
-	out chan ParseResult, s Scheduler) {
+	out chan ParseResult, ready ReadyNotifier) {
 	go func() {
 		for {
 			//tell scheduler i'm ready
-			s.WorkerReady(in)
+			ready.WorkerReady(in)
 			request := <-in                //阻塞等待有请求到来
 			result, err := worker(request) //解析请求，返回结果集
 			if err != nil {
