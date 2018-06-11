@@ -30,7 +30,7 @@ func (s *QueuedScheduler) Run() {
 			var activeWorker chan engine.Request
 			if len(requestQ) > 0 && len(workerQ) > 0 {
 				activeWorker = workerQ[0]
-				activeWorker = requestQ[0]
+				activeRequest = requestQ[0]
 			}
 			select {
 			case r := <-s.requestChan:
@@ -38,8 +38,8 @@ func (s *QueuedScheduler) Run() {
 			case w := <-s.workerChan:
 				workerQ = append(workerQ, w)
 			case activeWorker <- activeRequest:
-				activeWorker = workerQ[1:]
-				activeRequest = requestQ[1:]
+				workerQ = workerQ[1:]
+				requestQ = requestQ[1:]
 			}
 
 		}

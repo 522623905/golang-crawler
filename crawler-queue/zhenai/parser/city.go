@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"log"
+	//	"log"
 
 	"regexp"
 
@@ -32,7 +32,7 @@ func ParseCity(contents []byte) engine.ParseResult {
 					return ParseProfile(bytes, name)
 				},
 			})
-		log.Printf("name:%s,url:%s\n", name, string(m[1]))
+		//		log.Printf("name:%s,url:%s\n", name, string(m[1]))
 		//		limit--
 		//		if limit == 0 {
 		//			break
