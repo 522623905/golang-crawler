@@ -2,7 +2,7 @@ package parser
 
 import (
 	"fmt"
-	"log"
+	//	"log"
 	"os"
 	"regexp"
 	"strconv"
@@ -56,7 +56,7 @@ func ParseProfile(contents []byte, name string) engine.ParseResult {
 	profile.House = extractString(contents, houseRe)
 	profile.Car = extractString(contents, carRe)
 
-	log.Printf("name:%s,age:%d,Gender:%s,Marriage:%s,height:%d,weight:%d,Income:%s,Xingzuo:%s,Education:%s,Occupation::%s,Hokou:%s,House:%s,Car:%s\n", name, age, profile.Gender, profile.Marriage, height, weight, profile.Income, profile.Xinzuo, profile.Education, profile.Occupation, profile.Hokou, profile.House, profile.Car)
+	//	log.Printf("name:%s,age:%d,Gender:%s,Marriage:%s,height:%d,weight:%d,Income:%s,Xingzuo:%s,Education:%s,Occupation::%s,Hokou:%s,House:%s,Car:%s\n", name, age, profile.Gender, profile.Marriage, height, weight, profile.Income, profile.Xinzuo, profile.Education, profile.Occupation, profile.Hokou, profile.House, profile.Car)
 	//	log.SetPrefix("")
 
 	//记录信息到文件当中

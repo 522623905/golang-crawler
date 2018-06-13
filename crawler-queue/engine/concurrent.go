@@ -1,10 +1,9 @@
 package engine
 
-//import "log"
-
 type ConcurrentEngine struct {
 	Scheduler   Scheduler //调度器
 	WorkerCount int       //工作协程个数
+	ItemChan    chan interface{}
 }
 
 //调度器需要实现的接口
@@ -38,12 +37,16 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 
 	for {
 		result := <-out //out的结果由createWorker()解析后返回
-		//打印信息
-		//		for _, item := range result.Items {
-		//			log.Printf("Got item %d: %v", item)
-		//		}
+		//存储信息
+		for _, item := range result.Items {
+			go func() { e.ItemChan <- item }()
+		}
 
 		for _, request := range result.Requests {
+			//			//Url去重
+			//			if isDuplicate(request.Url) {
+			//				continue
+			//			}
 			e.Scheduler.Submit(request)
 		}
 	}

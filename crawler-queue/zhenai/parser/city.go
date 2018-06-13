@@ -23,7 +23,7 @@ func ParseCity(contents []byte) engine.ParseResult {
 	//	limit := 10 //限制人的个数
 	for _, m := range matches {
 		name := string(m[2])
-		result.Items = append(result.Items, "User "+string(m[2]))
+		//		result.Items = append(result.Items, "User "+string(m[2]))
 		result.Requests = append(
 			result.Requests,
 			engine.Request{

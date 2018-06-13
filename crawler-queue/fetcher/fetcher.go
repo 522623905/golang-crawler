@@ -15,7 +15,7 @@ import (
 )
 
 //设置个定时器，防止爬虫太快，网站有保护措施
-var rateLimiter = time.Tick(1 * time.Millisecond)
+var rateLimiter = time.Tick(1 * time.Microsecond)
 
 //提取url内容
 func Fetch(url string) ([]byte, error) {
@@ -25,21 +25,22 @@ func Fetch(url string) ([]byte, error) {
 	reqest, err := http.NewRequest("GET", url, nil)
 	reqest.Header.Add("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0")
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	resp, _ := client.Do(reqest)
+	resp, err := client.Do(reqest)
 
 	//	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("wrong status code: %d", resp.StatusCode)
 	}
 	bodyReader := bufio.NewReader(resp.Body)
 	e := determineEncoding(bodyReader)
 	utf8Reader := transform.NewReader(bodyReader, e.NewDecoder())
+	defer resp.Body.Close() //注意放置的位置,否则可能出现invalid memory
 	return ioutil.ReadAll(utf8Reader)
 }
 

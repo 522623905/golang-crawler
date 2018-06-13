@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"log"
+	//	"log"
 	"regexp"
 
 	"../../engine"
@@ -18,11 +18,11 @@ func ParseCityList(contents []byte) engine.ParseResult {
 	result := engine.ParseResult{}
 	//	limit := 1 //限制城市个数
 	for _, m := range matches {
-		result.Items = append(result.Items, "City "+string(m[2])) //m[2]为城市名
+		//		result.Items = append(result.Items, "City "+string(m[2])) //m[2]为城市名
 		result.Requests = append(
 			result.Requests,
 			engine.Request{Url: string(m[1]), ParseFunc: ParseCity}) //m[1]为城市对应的url
-		log.Printf("City: %s, Url:%s\n", m[2], m[1])
+		//		log.Printf("City: %s, Url:%s\n", m[2], m[1])
 
 		//		limit--
 		//		if limit == 0 {
