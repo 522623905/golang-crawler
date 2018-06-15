@@ -4,36 +4,43 @@ import (
 	"io/ioutil"
 	"testing"
 
+	"../../engine"
 	"../../model"
 )
 
 func TestParseProfile(t *testing.T) {
+	url := "http://albnum.zhenai.com/u/108739485"
 	contents, err := ioutil.ReadFile("profile_test_data.html")
 	if err != nil {
 		panic(err)
 	}
-	result := ParseProfile(contents, "惠儿")
+	result := ParseProfile(contents, url, "wswinny")
 	if len(result.Items) != 1 {
 		t.Errorf("Items should contain 1 element; but was %v", result.Items)
 	}
 
-	profile := result.Items[0].(model.Profile)
-	expected := model.Profile{
-		Name:       "惠儿",
-		Age:        50,
-		Height:     156,
-		Weight:     0,
-		Income:     "3000元以下",
-		Gender:     "女",
-		Xinzuo:     "魔羯座",
-		Marriage:   "离异",
-		Education:  "高中及以下",
-		Occupation: "销售总监",
-		Hokou:      "四川阿坝",
-		House:      "租房",
-		Car:        "未购车",
+	actual := result.Items[0]
+	expected := engine.Item{
+		Url:  "http://albnum.zhenai.com/u/108739485",
+		Type: "zhenai",
+		Id:   "108739485",
+		Payload: model.Profile{
+			Name:       "wswinny",
+			Age:        28,
+			Height:     159,
+			Weight:     49,
+			Income:     "5001-8000",
+			Gender:     "女",
+			Xinzuo:     "处女座",
+			Marriage:   "未婚",
+			Education:  "大学本科",
+			Occupation: "广告/市场",
+			Hokou:      "广东梅州",
+			House:      "单位宿舍",
+			Car:        "未购车",
+		},
 	}
-	if profile != expected {
-		t.Errorf("expected %v, but was %v", expected, profile)
+	if actual != expected {
+		t.Errorf("expected %v, but was %v", expected, actual)
 	}
 }

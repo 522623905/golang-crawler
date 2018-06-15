@@ -11,7 +11,7 @@ import (
 const cityListRe = `<a href="(http://www.zhenai.com/zhenghun/[0-9a-z]+)"[^>]*>([^<]+)</a>`
 
 //在http://www.zhenai.com/zhenghun中解析出城市列表:城市+url地址
-func ParseCityList(contents []byte) engine.ParseResult {
+func ParseCityList(contents []byte, url string) engine.ParseResult {
 	re, _ := regexp.Compile(cityListRe)
 	//查找所有的匹配，能拆分上述正则表达式中()的内容
 	matches := re.FindAllSubmatch(contents, -1)

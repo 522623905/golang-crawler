@@ -17,20 +17,17 @@ var (
 )
 
 //在某城市中，解析出人的url和name
-func ParseCity(contents []byte) engine.ParseResult {
+func ParseCity(contents []byte, url string) engine.ParseResult {
 	matches := profileRe.FindAllSubmatch(contents, -1)
 	result := engine.ParseResult{}
 	//	limit := 10 //限制人的个数
 	for _, m := range matches {
-		name := string(m[2])
 		//		result.Items = append(result.Items, "User "+string(m[2]))
 		result.Requests = append(
 			result.Requests,
 			engine.Request{
-				Url: string(m[1]),
-				ParseFunc: func(bytes []byte) engine.ParseResult {
-					return ParseProfile(bytes, name)
-				},
+				Url:       string(m[1]),
+				ParseFunc: ProfileParser(string(m[2])),
 			})
 		//		log.Printf("name:%s,url:%s\n", name, string(m[1]))
 		//		limit--

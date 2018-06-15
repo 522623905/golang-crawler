@@ -3,7 +3,7 @@ package engine
 type ConcurrentEngine struct {
 	Scheduler   Scheduler //调度器
 	WorkerCount int       //工作协程个数
-	ItemChan    chan interface{}
+	ItemChan    chan Item
 }
 
 //调度器需要实现的接口
@@ -43,10 +43,10 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 		}
 
 		for _, request := range result.Requests {
-			//			//Url去重
-			//			if isDuplicate(request.Url) {
-			//				continue
-			//			}
+			//Url去重
+			if isDuplicate(request.Url) {
+				continue
+			}
 			e.Scheduler.Submit(request)
 		}
 	}
@@ -67,4 +67,16 @@ func createWorker(in chan Request,
 			out <- result //阻塞等待结果集result给至out
 		}
 	}()
+}
+
+//用于url去重
+var visitedUrls = make(map[string]bool)
+
+//用于url去重
+func isDuplicate(url string) bool {
+	if visitedUrls[url] {
+		return true
+	}
+	visitedUrls[url] = true
+	return false
 }
