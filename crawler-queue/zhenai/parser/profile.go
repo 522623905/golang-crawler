@@ -21,6 +21,8 @@ var occupationRe = regexp.MustCompile(`<td><span class="label">职业： </span>
 var hokouRe = regexp.MustCompile(`<td><span class="label">籍贯：</span>([^<]+)</td>`)
 var houseRe = regexp.MustCompile(`<td><span class="label">住房条件：</span><span field="">([^<]+)</span></td>`)
 var carRe = regexp.MustCompile(`<td><span class="label">是否购车：</span><span field="">([^<]+)</span></td>`)
+
+//页面出现的"猜你喜欢"的客户
 var guessRe = regexp.MustCompile(`<a class="exp-user-name"[^>]*href="(http://albnum.zhenai.com/u/[\d]+)">([^<])</a>`)
 var idUrlRe = regexp.MustCompile(`http://albnum.zhenai.com/u/([\d]+)`)
 
@@ -58,7 +60,8 @@ func ParseProfile(contents []byte, url string, name string) engine.ParseResult {
 	result := engine.ParseResult{
 		Items: []engine.Item{
 			{
-				Url:     url,
+				Url: url,
+				//用于存储到elasticSearch的相关内容
 				Type:    "zhenai",
 				Id:      extractString([]byte(url), idUrlRe),
 				Payload: profile,

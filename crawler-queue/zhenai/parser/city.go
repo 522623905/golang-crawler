@@ -10,10 +10,12 @@ import (
 
 //获取某城市内的人的（url+名字）表达式，如：
 //<a href="http://album.zhenai.com/u/1188668898" target="_blank">交友征婚</a>
-//第3页的信息，如：http://www.zhenai.com/zhenghun/shanghai/3
+//第3页的信息，如："http://www.zhenai.com/zhenghun/shanghai/3"
 var (
+	//解析出客户的url
 	profileRe = regexp.MustCompile(`<a href="(http://album.zhenai.com/u/[0-9]+)"[^>]*>([^<]+)</a>`)
-	cityUrlRe = regexp.MustCompile(`href="(http://www.zhenai.com/zhenghun/[^"]+)"`) //看到更多的城市信息,如下一页
+	//解析出city内容下一页的url,便于继续爬去此city的客户url
+	cityUrlRe = regexp.MustCompile(`href="(http://www.zhenai.com/zhenghun/[^"]+)"`)
 )
 
 //在某城市中，解析出人的url和name

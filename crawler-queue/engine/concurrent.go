@@ -3,7 +3,7 @@ package engine
 type ConcurrentEngine struct {
 	Scheduler   Scheduler //调度器
 	WorkerCount int       //工作协程个数
-	ItemChan    chan Item
+	ItemChan    chan Item //用于与elasticSearch通信的channel
 }
 
 //调度器需要实现的接口

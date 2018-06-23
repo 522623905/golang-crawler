@@ -50,6 +50,7 @@
         {{range .Items}}
         <tr>
             <td><a href="{{.Url}}" target="_blank">{{.Payload.Name}}</a></td>
+<!--		with...end定义局部变量Payload,	以下操作的类似于Payload.Gender ....-->
         {{with .Payload}}
             <td>{{.Gender}}</td>
             <td>{{.Age}}</td>

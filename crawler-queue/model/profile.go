@@ -24,11 +24,13 @@ type Profile struct {
 
 func FromJsonObj(o interface{}) (Profile, error) {
 	var profile Profile
+	//	将数据编码成json字符串
 	s, err := json.Marshal(o)
 	if err != nil {
 		return profile, err
 	}
 
+	//将json字符串解码成Profile
 	err = json.Unmarshal(s, &profile)
 	return profile, err
 }

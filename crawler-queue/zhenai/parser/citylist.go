@@ -8,6 +8,7 @@ import (
 )
 
 //城市列表的正则表达式. 加上()为的是正则匹配后能提取出该处的内容； [^>]* 表示非>的任意字符
+//如:<a href="http://www.zhenai.com/zhenghun/guangzhou" class="">广州</a>
 const cityListRe = `<a href="(http://www.zhenai.com/zhenghun/[0-9a-z]+)"[^>]*>([^<]+)</a>`
 
 //在http://www.zhenai.com/zhenghun中解析出城市列表:城市+url地址

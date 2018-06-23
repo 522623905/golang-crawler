@@ -15,10 +15,10 @@ type ParseResult struct {
 }
 
 type Item struct {
-	Url     string //人物的url
-	Id      string //人物的ID,去重时用的
-	Type    string
-	Payload interface{}
+	Url     string      //人物的url
+	Id      string      //人物的ID,去重时用的,也用作ElasticSearch的Id
+	Type    string      //ElasticSearch的table name
+	Payload interface{} //具体数据
 }
 
 func NilParser([]byte) ParseResult {
