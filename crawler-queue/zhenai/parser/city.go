@@ -5,7 +5,7 @@ import (
 
 	"regexp"
 
-	"../../engine"
+	"u2pppw/crawler/crawler-queue/engine"
 )
 
 //获取某城市内的人的（url+名字）表达式，如：
@@ -28,8 +28,9 @@ func ParseCity(contents []byte, url string) engine.ParseResult {
 		result.Requests = append(
 			result.Requests,
 			engine.Request{
-				Url:       string(m[1]),
-				ParseFunc: ProfileParser(string(m[2])),
+				Url: string(m[1]),
+				Parser: NewProfileParser(
+					string(m[2])),
 			})
 		//		log.Printf("name:%s,url:%s\n", name, string(m[1]))
 		//		limit--
@@ -41,8 +42,8 @@ func ParseCity(contents []byte, url string) engine.ParseResult {
 	matches = cityUrlRe.FindAllSubmatch(contents, -1)
 	for _, m := range matches {
 		result.Requests = append(result.Requests, engine.Request{
-			Url:       string(m[1]),
-			ParseFunc: ParseCity,
+			Url:    string(m[1]),
+			Parser: engine.NewFuncParser(ParseCity, "ParseCity"),
 		})
 	}
 	return result

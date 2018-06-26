@@ -1,10 +1,10 @@
 package main
 
 import (
-	"./engine"
-	"./persist"
-	"./scheduler"
-	"./zhenai/parser"
+	"u2pppw/crawler/crawler-queue/engine"
+	"u2pppw/crawler/crawler-queue/persist"
+	"u2pppw/crawler/crawler-queue/scheduler"
+	"u2pppw/crawler/crawler-queue/zhenai/parser"
 )
 
 func main() {
@@ -23,8 +23,9 @@ func main() {
 
 	//引擎启动,并到该URl中爬取数据
 	e.Run(engine.Request{
-		Url:       "http://www.zhenai.com/zhenghun",
-		ParseFunc: parser.ParseCityList,
+		Url: "http://www.zhenai.com/zhenghun",
+		Parser: engine.NewFuncParser(
+			parser.ParseCityList, "ParseCityList"),
 	})
 	//	e.Run(engine.Request{
 	//		Url:       "http://www.zhenai.com/zhenghun/nanning",

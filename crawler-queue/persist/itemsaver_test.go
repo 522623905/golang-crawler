@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"testing"
 
-	"../engine"
+	"u2pppw/crawler/crawler-queue/engine"
 
-	"../model"
+	"u2pppw/crawler/crawler-queue/model"
+
 	"gopkg.in/olivere/elastic.v5"
 )
 
@@ -42,7 +43,7 @@ func TestSave(t *testing.T) {
 
 	const index = "dating_test"
 	//save expected
-	err = save(client, index, profile)
+	err = Save(client, index, profile)
 	if err != nil {
 		panic(err)
 	}

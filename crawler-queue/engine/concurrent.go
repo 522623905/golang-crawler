@@ -36,8 +36,11 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 	}
 
 	for {
-		result := <-out //out的结果由createWorker()解析后返回
-		//存储信息
+		//out的结果由createWorker()解析后返回
+		result := <-out
+
+		//从结果result中取出item,传递给e.ItemChan
+		//阻塞在ItemSaver()中的channel得以运行
 		for _, item := range result.Items {
 			go func() { e.ItemChan <- item }()
 		}
@@ -59,7 +62,7 @@ func createWorker(in chan Request,
 		for {
 			//tell scheduler i'm ready
 			ready.WorkerReady(in)
-			request := <-in                //阻塞等待有请求到来
+			request := <-in                //阻塞等待有请求到来,直到queued.go中的activeWorker <- activeRequest
 			result, err := worker(request) //解析请求，返回结果集
 			if err != nil {
 				continue

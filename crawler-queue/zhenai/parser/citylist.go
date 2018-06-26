@@ -4,7 +4,7 @@ import (
 	//	"log"
 	"regexp"
 
-	"../../engine"
+	"u2pppw/crawler/crawler-queue/engine"
 )
 
 //城市列表的正则表达式. 加上()为的是正则匹配后能提取出该处的内容； [^>]* 表示非>的任意字符
@@ -21,8 +21,10 @@ func ParseCityList(contents []byte, url string) engine.ParseResult {
 	for _, m := range matches {
 		//		result.Items = append(result.Items, "City "+string(m[2])) //m[2]为城市名
 		result.Requests = append(
-			result.Requests,
-			engine.Request{Url: string(m[1]), ParseFunc: ParseCity}) //m[1]为城市对应的url
+			result.Requests, engine.Request{
+				Url:    string(m[1]),
+				Parser: engine.NewFuncParser(ParseCity, "ParseCity"),
+			}) //m[1]为城市对应的url
 		//		log.Printf("City: %s, Url:%s\n", m[2], m[1])
 
 		//		limit--

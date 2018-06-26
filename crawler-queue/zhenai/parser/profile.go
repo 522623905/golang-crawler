@@ -4,8 +4,9 @@ import (
 	"regexp"
 	"strconv"
 
-	"../../engine"
-	"../../model"
+	"u2pppw/crawler/crawler-queue/engine"
+
+	"u2pppw/crawler/crawler-queue/model"
 )
 
 //个人信息的相关正则表达式,其中[\d]表示匹配数字
@@ -27,7 +28,7 @@ var guessRe = regexp.MustCompile(`<a class="exp-user-name"[^>]*href="(http://alb
 var idUrlRe = regexp.MustCompile(`http://albnum.zhenai.com/u/([\d]+)`)
 
 //解析对应url下名字为name的人的相关信息
-func ParseProfile(contents []byte, url string, name string) engine.ParseResult {
+func parseProfile(contents []byte, url string, name string) engine.ParseResult {
 	profile := model.Profile{}
 	profile.Name = name
 	age, err := strconv.Atoi(extractString(contents, ageRe))
@@ -73,8 +74,9 @@ func ParseProfile(contents []byte, url string, name string) engine.ParseResult {
 	for _, m := range matches {
 		result.Requests = append(result.Requests,
 			engine.Request{
-				Url:       string(m[1]),
-				ParseFunc: ProfileParser(string(m[2])),
+				Url: string(m[1]),
+				Parser: NewProfileParser(
+					string(m[2])),
 			})
 	}
 
@@ -92,9 +94,22 @@ func extractString(contents []byte, re *regexp.Regexp) string {
 	}
 }
 
-func ProfileParser(name string) engine.ParseFunc {
-	return func(
-		c []byte, url string) engine.ParseResult {
-		return ParseProfile(c, url, name)
+type ProfileParser struct {
+	userNname string
+}
+
+func (p *ProfileParser) Parse(
+	contents []byte, url string) engine.ParseResult {
+	return parseProfile(contents, url, p.userNname)
+}
+
+func (p *ProfileParser) Serialize() (
+	name string, args interface{}) {
+	return "ProfileParser", p.userNname
+}
+
+func NewProfileParser(name string) *ProfileParser {
+	return &ProfileParser{
+		userNname: name,
 	}
 }

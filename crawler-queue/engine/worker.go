@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"../fetcher"
+	"u2pppw/crawler/crawler-queue/fetcher"
 )
 
 //解析请求，返回结果
@@ -19,5 +19,5 @@ func worker(r Request) (ParseResult, error) {
 		log.Printf("Fetcher: error fetching url %s: %v", r.Url, err)
 		return ParseResult{}, err
 	}
-	return r.ParseFunc(body, r.Url), nil
+	return r.Parser.Parse(body, r.Url), nil
 }

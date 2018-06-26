@@ -6,7 +6,7 @@ import (
 	//	"fmt"
 	"log"
 
-	"../engine"
+	"u2pppw/crawler/crawler-queue/engine"
 
 	"gopkg.in/olivere/elastic.v5"
 )
@@ -33,13 +33,15 @@ func ItemSaver(index string) (chan engine.Item, error) {
 	go func() {
 		itemCount := 0
 		for {
-			item := <-out //item阻塞等待out channel有数据到
+			//item阻塞等待out channel有数据
+			//见引擎的Run()函数
+			item := <-out
 			log.Printf("Item Saver:got item "+
 				"#%d: %v", itemCount, item)
 			itemCount++
 
 			//把item保存到elasticSearch的index(database name)中
-			err := save(client, index, item)
+			err := Save(client, index, item)
 			if err != nil {
 				log.Printf("Item Saver: error "+
 					"saving item %v:%v", item, err)
@@ -50,7 +52,7 @@ func ItemSaver(index string) (chan engine.Item, error) {
 }
 
 //把item保存到elasticSearch的index(database name)中
-func save(client *elastic.Client, index string, item engine.Item) error {
+func Save(client *elastic.Client, index string, item engine.Item) error {
 
 	//如果ElasticSearch没有指定Type(table name),则出错
 	if item.Type == "" {

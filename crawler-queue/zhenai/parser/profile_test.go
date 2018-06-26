@@ -4,8 +4,9 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"../../engine"
-	"../../model"
+	"u2pppw/crawler/crawler-queue/engine"
+
+	"u2pppw/crawler/crawler-queue/model"
 )
 
 func TestParseProfile(t *testing.T) {

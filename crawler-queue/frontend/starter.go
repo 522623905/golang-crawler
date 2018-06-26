@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"./controller"
+	"u2pppw/crawler/crawler-queue/frontend/controller"
 )
 
 /*

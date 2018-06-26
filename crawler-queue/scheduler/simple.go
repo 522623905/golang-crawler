@@ -1,6 +1,6 @@
 package scheduler
 
-import "../engine"
+import "u2pppw/crawler/crawler-queue/engine"
 
 type SimpleScheduler struct {
 	workerChan chan engine.Request

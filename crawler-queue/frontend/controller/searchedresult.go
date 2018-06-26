@@ -8,10 +8,12 @@ import (
 	"strconv"
 	"strings"
 
-	"../model"
+	"u2pppw/crawler/crawler-queue/frontend/model"
 
-	"../../engine"
-	"../view"
+	"u2pppw/crawler/crawler-queue/engine"
+
+	"u2pppw/crawler/crawler-queue/frontend/view"
+
 	"gopkg.in/olivere/elastic.v5"
 )
 
