@@ -24,8 +24,8 @@ var houseRe = regexp.MustCompile(`<td><span class="label">住房条件：</span>
 var carRe = regexp.MustCompile(`<td><span class="label">是否购车：</span><span field="">([^<]+)</span></td>`)
 
 //页面出现的"猜你喜欢"的客户
-var guessRe = regexp.MustCompile(`<a class="exp-user-name"[^>]*href="(http://albnum.zhenai.com/u/[\d]+)">([^<])</a>`)
-var idUrlRe = regexp.MustCompile(`http://albnum.zhenai.com/u/([\d]+)`)
+var guessRe = regexp.MustCompile(`<a class="exp-user-name"[^>]*href="(http://album.zhenai.com/u/[\d]+)">([^<]+)</a>`)
+var idUrlRe = regexp.MustCompile(`http://album.zhenai.com/u/([\d]+)`)
 
 //解析对应url下名字为name的人的相关信息
 func parseProfile(contents []byte, url string, name string) engine.ParseResult {
@@ -70,6 +70,7 @@ func parseProfile(contents []byte, url string, name string) engine.ParseResult {
 		},
 	}
 
+	//获取"猜你喜欢"的客户
 	matches := guessRe.FindAllSubmatch(contents, -1)
 	for _, m := range matches {
 		result.Requests = append(result.Requests,
@@ -94,6 +95,7 @@ func extractString(contents []byte, re *regexp.Regexp) string {
 	}
 }
 
+//定义ProfileParser,并实现engine package中的Parser接口
 type ProfileParser struct {
 	userNname string
 }
@@ -108,6 +110,7 @@ func (p *ProfileParser) Serialize() (
 	return "ProfileParser", p.userNname
 }
 
+//new一个ProfileParser
 func NewProfileParser(name string) *ProfileParser {
 	return &ProfileParser{
 		userNname: name,

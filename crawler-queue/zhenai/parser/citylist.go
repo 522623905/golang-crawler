@@ -4,6 +4,7 @@ import (
 	//	"log"
 	"regexp"
 
+	"u2pppw/crawler/crawler-distribute/config"
 	"u2pppw/crawler/crawler-queue/engine"
 )
 
@@ -22,8 +23,9 @@ func ParseCityList(contents []byte, url string) engine.ParseResult {
 		//		result.Items = append(result.Items, "City "+string(m[2])) //m[2]为城市名
 		result.Requests = append(
 			result.Requests, engine.Request{
-				Url:    string(m[1]),
-				Parser: engine.NewFuncParser(ParseCity, "ParseCity"),
+				Url: string(m[1]),
+				Parser: engine.NewFuncParser(
+					ParseCity, config.ParseCity),
 			}) //m[1]为城市对应的url
 		//		log.Printf("City: %s, Url:%s\n", m[2], m[1])
 

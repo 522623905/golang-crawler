@@ -1,12 +1,20 @@
 package config
 
 const (
-	//rpc service ports
-	ItemSaverPort = 1234
+	//Parser names
+	ParseCity     = "ParseCity"
+	ParseCityList = "ParseCityList"
+	//	ParseProfile  = "ParseProfile"
+	ParseProfile = "ProfileParser"
+	NilParser    = "NilParser"
 
 	//elasticsearch index
 	ElasticIndex = "dating_profile"
 
 	//rpc endpoints
-	ItemSaverRpc = "ItemSaverService.Save"
+	ItemSaverRpc    = "ItemSaverService.Save"
+	CrawlServiceRpc = "CrawlService.Process"
+
+	//Rate limiting
+	Qps = 20
 )

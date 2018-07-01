@@ -9,7 +9,7 @@ import (
 )
 
 //解析请求，返回结果
-func worker(r Request) (ParseResult, error) {
+func Worker(r Request) (ParseResult, error) {
 	//	log.Printf("Fetching %s", r.Url)
 	if strings.Contains(r.Url, "qishi") {
 		return ParseResult{}, fmt.Errorf("parse %s is wrong,so continue", r.Url)

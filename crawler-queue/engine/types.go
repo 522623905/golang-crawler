@@ -2,15 +2,16 @@ package engine
 
 type ParseFunc func(contents []byte, url string) ParseResult
 
+//解析的接口
 type Parser interface {
-	Parse(contents []byte, url string) ParseResult
-	Serialize() (name string, args interface{})
+	Parse(contents []byte, url string) ParseResult //解析url的函数
+	Serialize() (name string, args interface{})    //用于rpc的封装
 }
 
 //解析请求struct
 type Request struct {
 	Url    string //要解析的url
-	Parser Parser //该url对应的解析函数
+	Parser Parser //该url对应的解析接口
 }
 
 type SerializedParser struct {
@@ -33,6 +34,7 @@ type Item struct {
 	Payload interface{} //具体数据
 }
 
+//NilParser实现Parser接口
 type NilParser struct{}
 
 func (NilParser) Parse(
@@ -45,6 +47,7 @@ func (NilParser) Serialize() (
 	return "NilParser", nil
 }
 
+//FuncParser实现Parser接口
 type FuncParser struct {
 	parser ParseFunc
 	name   string
@@ -59,6 +62,7 @@ func (f *FuncParser) Serialize() (
 	return f.name, nil
 }
 
+//new一个FuncParser结构
 func NewFuncParser(p ParseFunc, name string) *FuncParser {
 	return &FuncParser{
 		parser: p,

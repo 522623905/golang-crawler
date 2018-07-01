@@ -1,10 +1,13 @@
 package engine
 
 type ConcurrentEngine struct {
-	Scheduler   Scheduler //调度器
-	WorkerCount int       //工作协程个数
-	ItemChan    chan Item //用于与elasticSearch通信的channel
+	Scheduler        Scheduler //调度器
+	WorkerCount      int       //工作协程个数
+	ItemChan         chan Item //用于与elasticSearch通信的channel
+	RequestProcessor Processor
 }
+
+type Processor func(Request) (ParseResult, error)
 
 //调度器需要实现的接口
 type Scheduler interface {
@@ -26,7 +29,7 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 
 	//创建工作协程负责解析in请求，并返回解析结果给out
 	for i := 0; i < e.WorkerCount; i++ {
-		createWorker(e.Scheduler.WorkerChan(),
+		e.createWorker(e.Scheduler.WorkerChan(),
 			out, e.Scheduler)
 	}
 
@@ -56,14 +59,16 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 }
 
 //工作协程,等待请求，并解析返回结果
-func createWorker(in chan Request,
+func (e *ConcurrentEngine) createWorker(
+	in chan Request,
 	out chan ParseResult, ready ReadyNotifier) {
 	go func() {
 		for {
 			//tell scheduler i'm ready
 			ready.WorkerReady(in)
-			request := <-in                //阻塞等待有请求到来,直到queued.go中的activeWorker <- activeRequest
-			result, err := worker(request) //解析请求，返回结果集
+			request := <-in //阻塞等待有请求到来,直到queued.go中的activeWorker <- activeRequest
+			//call rpc
+			result, err := e.RequestProcessor(request) //解析请求，返回结果集
 			if err != nil {
 				continue
 			}

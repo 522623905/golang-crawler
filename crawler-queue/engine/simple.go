@@ -20,7 +20,7 @@ func (e SimpleEngine) Run(seeds ...Request) {
 		requests = requests[1:]
 
 		//解析请求r
-		parseResult, err := worker(r)
+		parseResult, err := Worker(r)
 		if err != nil {
 			continue
 		}

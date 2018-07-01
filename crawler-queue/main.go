@@ -16,9 +16,10 @@ func main() {
 
 	//创建引擎
 	e := engine.ConcurrentEngine{
-		Scheduler:   &scheduler.QueuedScheduler{},
-		WorkerCount: 100,
-		ItemChan:    itemChan, //用于与elasticSearch通信的channel
+		Scheduler:        &scheduler.QueuedScheduler{},
+		WorkerCount:      100,
+		ItemChan:         itemChan, //用于与elasticSearch通信的channel
+		RequestProcessor: engine.Worker,
 	}
 
 	//引擎启动,并到该URl中爬取数据

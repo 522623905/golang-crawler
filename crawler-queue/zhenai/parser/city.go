@@ -5,6 +5,7 @@ import (
 
 	"regexp"
 
+	"u2pppw/crawler/crawler-distribute/config"
 	"u2pppw/crawler/crawler-queue/engine"
 )
 
@@ -38,12 +39,14 @@ func ParseCity(contents []byte, url string) engine.ParseResult {
 		//			break
 		//		}
 	}
+
 	//看到更多的城市信息
 	matches = cityUrlRe.FindAllSubmatch(contents, -1)
 	for _, m := range matches {
 		result.Requests = append(result.Requests, engine.Request{
-			Url:    string(m[1]),
-			Parser: engine.NewFuncParser(ParseCity, "ParseCity"),
+			Url: string(m[1]),
+			Parser: engine.NewFuncParser(
+				ParseCity, config.ParseCity),
 		})
 	}
 	return result

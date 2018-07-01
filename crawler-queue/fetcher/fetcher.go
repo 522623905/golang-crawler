@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"u2pppw/crawler/crawler-distribute/config"
 
 	"golang.org/x/net/html/charset"
 	"golang.org/x/text/encoding"
@@ -15,11 +16,13 @@ import (
 )
 
 //设置个定时器，防止爬虫太快，网站有保护措施
-var rateLimiter = time.Tick(1 * time.Microsecond)
+var rateLimiter = time.Tick(
+	time.Second / config.Qps)
 
 //提取url内容
 func Fetch(url string) ([]byte, error) {
 	<-rateLimiter //定时接收
+	log.Printf("Fetching url %s", url)
 	//要增加User-Agent头，否则爬虫的时候可能会返回403权限错误
 	client := &http.Client{}
 	reqest, err := http.NewRequest("GET", url, nil)

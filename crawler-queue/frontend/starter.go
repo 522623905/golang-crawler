@@ -7,7 +7,7 @@ import (
 )
 
 /*
-**用于显示elasticSearch数据库中的内容**
+**用于前端显示elasticSearch数据库中的内容**
  */
 
 func main() {
