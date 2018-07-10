@@ -2,19 +2,19 @@
     启动ElasticSearch:
         sudo docker run -d -p 9200:9200 elasticsearch:latest
 1.
-    启动:
+    启动rpc服务器,用于支持itemsaver服务(item存储到ElasticSearch)
         crawler-distribute/persist/server/itemsaver.go
 		go run itemsaver.go --port=1234
 2.
-    启动:
-        crawler-distribute/worker/server/server.go
+    启动rpc服务器,用于支持解析请求和返回结果的服务
+        crawler-distribute/worker/server/worker.go
 		go run worker.go --port=9000
 		go run worker.go --port=9001
 3.  
     启动:
         crawler-distribute/main.go
-		go run worker.go --port=9001
+		go run main.go -itemsaver_host=":1234" --worker_hosts=":9000,:9001"
 
 4.
 	启动fronted/started.go
-	前端展示
+	前端展示:localhost:8888

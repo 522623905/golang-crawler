@@ -25,7 +25,7 @@ var (
 //go run main.go -itemsaver_host=":1234" --worker_hosts=":9000,:9001"
 func main() {
 	flag.Parse()
-	//通过rpc用于与elasticSearch通信
+	//连接itemSaverHost的rpc服务器,通过rpc用于与elasticSearch通信
 	itemChan, err := client.ItemSaver(
 		*itemSaverHost)
 	if err != nil {
@@ -33,9 +33,11 @@ func main() {
 	}
 	log.Printf("Connect to %s", *itemSaverHost)
 
+	//创建连接池
 	pool := createClientPool(
 		strings.Split(*workerHosts, ",")) //逗号分割出来
 
+	//创建处理器
 	processor := client2.CreateProcessor(pool)
 
 	//创建引擎
@@ -53,10 +55,6 @@ func main() {
 			parser.ParseCityList,
 			config.ParseCityList),
 	})
-	//	e.Run(engine.Request{
-	//		Url:       "http://www.zhenai.com/zhenghun/nanning",
-	//		ParseFunc: parser.ParseCity,
-	//	})
 }
 
 //创建rpc client连接池
@@ -72,7 +70,7 @@ func createClientPool(hosts []string) chan *rpc.Client {
 		}
 	}
 
-	//创建一个channel,负责共享池中的client
+	//创建一个channel,负责分发池中的client
 	out := make(chan *rpc.Client)
 	go func() {
 		//该层for循环负责一直分发,否则发完了就完了

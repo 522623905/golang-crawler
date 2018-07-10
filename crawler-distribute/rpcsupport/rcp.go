@@ -7,8 +7,9 @@ import (
 	"net/rpc/jsonrpc"
 )
 
-//启动rpc服务器,提供要注册的对象service
+//service:要注册rpc服务的对象service
 //则该service的方法均可用rpc进行调用
+//host:Ip+port
 func ServeRpc(host string, service interface{}) error {
 	rpc.Register(service)
 	listener, err := net.Listen("tcp", host)
@@ -30,7 +31,7 @@ func ServeRpc(host string, service interface{}) error {
 	return nil
 }
 
-//供客户端连接rpc服务器
+//供客户端连接rpc服务器，地址为host
 func NewClient(host string) (*rpc.Client, error) {
 	conn, err := net.Dial("tcp", host)
 	if err != nil {

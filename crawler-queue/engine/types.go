@@ -5,7 +5,7 @@ type ParseFunc func(contents []byte, url string) ParseResult
 //解析的接口
 type Parser interface {
 	Parse(contents []byte, url string) ParseResult //解析url的函数
-	Serialize() (name string, args interface{})    //用于rpc的封装
+	Serialize() (name string, args interface{})    //用于rpc的封装,序列化后返回函数名和传递给函数的参数
 }
 
 //解析请求struct
@@ -34,29 +34,33 @@ type Item struct {
 	Payload interface{} //具体数据
 }
 
-//NilParser实现Parser接口
+//NilParser
 type NilParser struct{}
 
+//实现Parser接口
 func (NilParser) Parse(
 	_ []byte, _ string) ParseResult {
 	return ParseResult{}
 }
 
+//实现Parser接口
 func (NilParser) Serialize() (
 	name string, args interface{}) {
 	return "NilParser", nil
 }
 
-//FuncParser实现Parser接口
+//FuncParser
 type FuncParser struct {
-	parser ParseFunc
-	name   string
+	parser ParseFunc //parse函数
+	name   string    //parse函数名
 }
 
+//实现Parser接口
 func (f *FuncParser) Parse(contents []byte, url string) ParseResult {
 	return f.parser(contents, url)
 }
 
+//实现Parser接口
 func (f *FuncParser) Serialize() (
 	name string, args interface{}) {
 	return f.name, nil

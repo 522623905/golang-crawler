@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	//用于与elasticSearch通信的channel
+	//用于与elasticSearch Saver通信的channel
 	itemChan, err := persist.ItemSaver("dating_profile")
 	if err != nil {
 		panic(err)
@@ -18,7 +18,7 @@ func main() {
 	e := engine.ConcurrentEngine{
 		Scheduler:        &scheduler.QueuedScheduler{},
 		WorkerCount:      100,
-		ItemChan:         itemChan, //用于与elasticSearch通信的channel
+		ItemChan:         itemChan, //把上述创建的用于与elasticSearch通信的channel传入进来
 		RequestProcessor: engine.Worker,
 	}
 

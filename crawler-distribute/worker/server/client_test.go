@@ -28,6 +28,7 @@ func TestCrawService(t *testing.T) {
 			Args: "安静的雪",
 		},
 	}
+
 	var result worker.ParseResult
 	err = client.Call(
 		config.CrawlServiceRpc, req, &result)

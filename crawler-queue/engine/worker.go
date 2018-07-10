@@ -8,7 +8,7 @@ import (
 	"u2pppw/crawler/crawler-queue/fetcher"
 )
 
-//解析请求，返回结果
+//解析url请求，返回结果
 func Worker(r Request) (ParseResult, error) {
 	//	log.Printf("Fetching %s", r.Url)
 	if strings.Contains(r.Url, "qishi") {

@@ -66,6 +66,7 @@ func Save(client *elastic.Client, index string, item engine.Item) error {
 		Index(index).
 		Type(item.Type).
 		BodyJson(item)
+	//如果有id则指定elasticsearch的Id,否则若不指定则由elasticsearch随机生成
 	if item.Id != "" {
 		indexService.Id(item.Id)
 	}

@@ -10,6 +10,7 @@ import (
 )
 
 //注意封装成可用rpc传递的结构
+//主要是序列化和反序列化的操作
 
 type SerializedParser struct {
 	Name string      //函数名
@@ -26,6 +27,7 @@ type ParseResult struct {
 	Requests []Request
 }
 
+//将engine.Request序列化成可供rpc调用的Request
 func SerializeRequest(r engine.Request) Request {
 	name, args := r.Parser.Serialize()
 	return Request{
@@ -38,6 +40,7 @@ func SerializeRequest(r engine.Request) Request {
 
 }
 
+//将engine.ParseResult序列化成可供rpc调用的ParseResult
 func SerializeResult(
 	r engine.ParseResult) ParseResult {
 	result := ParseResult{
@@ -51,6 +54,7 @@ func SerializeResult(
 	return result
 }
 
+//将Request反序列化成engine.Request
 func DeserializeRequest(r Request) (engine.Request, error) {
 	parser, err := deserializeParser(r.Parser)
 	if err != nil {
@@ -62,6 +66,7 @@ func DeserializeRequest(r Request) (engine.Request, error) {
 	}, nil
 }
 
+//将ParseResult反序列化成engine.ParseResult
 func DeserializeResult(r ParseResult) engine.ParseResult {
 	result := engine.ParseResult{
 		Items: r.Items,
@@ -79,6 +84,7 @@ func DeserializeResult(r ParseResult) engine.ParseResult {
 	return result
 }
 
+//将SerializedParser反序列化成engine.Parser接口
 func deserializeParser(p SerializedParser) (engine.Parser, error) {
 	switch p.Name {
 	case config.ParseCityList:

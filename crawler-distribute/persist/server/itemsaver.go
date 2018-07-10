@@ -12,6 +12,7 @@ import (
 
 var port = flag.Int("port", 0, "the port for me to listen on")
 
+//启动rpc服务,用于支持itemsaver服务(将item存储到ElasticSearch)
 //go run itemsaver.go --port=1234
 func main() {
 	//解析port参数,用于指定监听的端口
@@ -37,7 +38,7 @@ func serveRpc(host, index string) error {
 		return err
 	}
 
-	//因为ItemSaverService提供的方法是指针接受者,因此加上&地址符合
+	//因为ItemSaverService提供的方法是指针接受者,因此加上&地址符号
 	return rpcsupport.ServeRpc(host,
 		&persist.ItemSaverService{
 			Client: client,

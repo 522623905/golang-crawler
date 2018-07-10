@@ -3,8 +3,8 @@ package engine
 type ConcurrentEngine struct {
 	Scheduler        Scheduler //调度器
 	WorkerCount      int       //工作协程个数
-	ItemChan         chan Item //用于与elasticSearch通信的channel
-	RequestProcessor Processor
+	ItemChan         chan Item //用于与elasticSearch Saver通信的channel
+	RequestProcessor Processor //解析器
 }
 
 type Processor func(Request) (ParseResult, error)
@@ -27,7 +27,7 @@ func (e *ConcurrentEngine) Run(seeds ...Request) {
 	out := make(chan ParseResult) //用于传递解析请求的结果的channel
 	e.Scheduler.Run()             //运行调度器
 
-	//创建工作协程负责解析in请求，并返回解析结果给out
+	//创建WorkerCount个协程负责解析in请求，并返回解析结果给out
 	for i := 0; i < e.WorkerCount; i++ {
 		e.createWorker(e.Scheduler.WorkerChan(),
 			out, e.Scheduler)

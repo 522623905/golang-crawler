@@ -53,16 +53,3 @@ func TestItemSaver(t *testing.T) {
 		t.Errorf("result: %s; err:%s", result, err)
 	}
 }
-
-//func serveRpc(host,index string) error {
-//	client, err := elastic.NewClient(
-//		elastic.SetSniff(false))
-//	if err != nil {
-//		return err
-//	}
-
-//	return rpcsupport.ServeRpc(host, persist.ItemSaverService{
-//		Client: client,
-//		Index:  index,
-//	})
-//}

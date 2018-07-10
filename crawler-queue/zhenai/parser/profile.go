@@ -105,6 +105,7 @@ func (p *ProfileParser) Parse(
 	return parseProfile(contents, url, p.userNname)
 }
 
+//序列化,返回 函数名字,传递给函数的参数
 func (p *ProfileParser) Serialize() (
 	name string, args interface{}) {
 	return "ProfileParser", p.userNname

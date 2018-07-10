@@ -9,6 +9,8 @@ import (
 	"gopkg.in/olivere/elastic.v5"
 )
 
+//提供RPC服务,用于把Item存储到ELasticSearch
+
 type ItemSaverService struct {
 	Client *elastic.Client //elasticsearch client
 	Index  string          //index(database name)
