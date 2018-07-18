@@ -5,11 +5,11 @@ import (
 	"testing"
 
 	//因为有两个model,因此重命名一下
-	"u2pppw/crawler/crawler-queue/engine"
+	"u2pppw/crawler/crawler-queue-1/engine"
 
-	"u2pppw/crawler/crawler-queue/frontend/model"
+	"u2pppw/crawler/crawler-queue-1/frontend/model"
 
-	common "u2pppw/crawler/crawler-queue/model"
+	common "u2pppw/crawler/crawler-queue-1/model"
 )
 
 func TestSearchResultView_Render(t *testing.T) {

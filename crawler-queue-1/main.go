@@ -1,10 +1,10 @@
 package main
 
 import (
-	"u2pppw/crawler/crawler-queue/engine"
-	"u2pppw/crawler/crawler-queue/persist"
-	"u2pppw/crawler/crawler-queue/scheduler"
-	"u2pppw/crawler/crawler-queue/zhenai/parser"
+	"u2pppw/crawler/crawler-queue-1/engine"
+	"u2pppw/crawler/crawler-queue-1/persist"
+	"u2pppw/crawler/crawler-queue-1/scheduler"
+	"u2pppw/crawler/crawler-queue-1/zhenai/parser"
 )
 
 func main() {

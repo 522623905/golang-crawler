@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"u2pppw/crawler/crawler-queue/fetcher"
+	"u2pppw/crawler/crawler-queue-1/fetcher"
 )
 
 //解析请求，返回结果

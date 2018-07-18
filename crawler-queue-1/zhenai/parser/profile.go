@@ -4,9 +4,9 @@ import (
 	"regexp"
 	"strconv"
 
-	"u2pppw/crawler/crawler-queue/engine"
+	"u2pppw/crawler/crawler-queue-1/engine"
 
-	"u2pppw/crawler/crawler-queue/model"
+	"u2pppw/crawler/crawler-queue-1/model"
 )
 
 //个人信息的相关正则表达式,其中[\d]表示匹配数字

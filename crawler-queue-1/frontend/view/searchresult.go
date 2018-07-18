@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"io"
 
-	"u2pppw/crawler/crawler-queue/frontend/model"
+	"u2pppw/crawler/crawler-queue-1/frontend/model"
 )
 
 //模板html的template

@@ -5,7 +5,7 @@ import (
 
 	"regexp"
 
-	"u2pppw/crawler/crawler-queue/engine"
+	"u2pppw/crawler/crawler-queue-1/engine"
 )
 
 //获取某城市内的人的（url+名字）表达式，如：

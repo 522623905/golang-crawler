@@ -1,6 +1,6 @@
 package scheduler
 
-import "u2pppw/crawler/crawler-queue/engine"
+import "u2pppw/crawler/crawler-queue-1/engine"
 
 type QueuedScheduler struct {
 	requestChan chan engine.Request      //用于接收request的channel
