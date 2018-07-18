@@ -61,16 +61,19 @@ func TestSave(t *testing.T) {
 
 	//%+v会把结构体的字段名也打出来
 	t.Logf("%+v", resp)
-	//打印出具体内容
+	//打印出具体内容,Source才包含的是具体数据
 	t.Logf("%s", resp.Source)
 
 	//json反序列化成Profile
 	var actual engine.Item
 	json.Unmarshal(*resp.Source, &actual)
+	t.Logf("%s", actual)
 
+	//为的是把actual的map的内容提出来成payload
 	actualProfile, _ := model.FromJsonObj(
 		actual.Payload)
 	actual.Payload = actualProfile
+	t.Logf("%s", actual)
 
 	if actual != profile {
 		t.Errorf("got %v;expected %v", actual, profile)
