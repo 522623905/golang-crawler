@@ -18,11 +18,11 @@ import (
 )
 
 type SearchResultHandler struct {
-	view   view.SearchResultView //解析后的html template对象
+	view   view.SearchResultView //解析模板文件后的html template对象
 	client *elastic.Client       //与elasticSearch通信的对象,从client中把数据给view
 }
 
-//用于创建对象
+//用于创建对象,传入参数为模板文件名
 func CreateSearchResultHandler(
 	template string) SearchResultHandler {
 	client, err := elastic.NewClient(elastic.SetSniff(false))
@@ -65,7 +65,8 @@ func (h SearchResultHandler) ServeHTTP(w http.ResponseWriter, req *http.Request)
 
 //搜索中输入如:
 //	男 已购房 已购车 Age:(<30) Height:(>180)
-//q:要查询的内容  from:页码
+//	q:要查询的内容  from:页码
+//	从elasticSearch获取相关内容
 func (h SearchResultHandler) getSearchResult(q string, from int) (model.SearchResult, error) {
 	var result model.SearchResult
 	result.Query = q //获取url中"q="后面的内容
