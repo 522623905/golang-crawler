@@ -1,5 +1,0 @@
-name:惠儿,age:50,Gender:女,Marriage:离异,height:156,weight:0,Income:3000元以下,Xingzuo:魔羯座,Education:高中及以下,Occupation::销售总监,Hokou:四川阿坝,House:租房,Car:未购车
-name:惠儿,age:50,Gender:女,Marriage:离异,height:156,weight:0,Income:3000元以下,Xingzuo:魔羯座,Education:高中及以下,Occupation::销售总监,Hokou:四川阿坝,House:租房,Car:未购车
-name:安静的雪,age:50,Gender:女,Marriage:离异,height:156,weight:0,Income:3000元以下,Xingzuo:魔羯座,Education:高中及以下,Occupation::销售总监,Hokou:四川阿坝,House:租房,Car:未购车
-name:wswinny,age:50,Gender:女,Marriage:离异,height:156,weight:0,Income:3000元以下,Xingzuo:魔羯座,Education:高中及以下,Occupation::销售总监,Hokou:四川阿坝,House:租房,Car:未购车
-name:wswinny,age:50,Gender:女,Marriage:离异,height:156,weight:0,Income:3000元以下,Xingzuo:魔羯座,Education:高中及以下,Occupation::销售总监,Hokou:四川阿坝,House:租房,Car:未购车

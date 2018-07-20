@@ -67,10 +67,12 @@ func TestSave(t *testing.T) {
 	//json反序列化成Profile
 	var actual engine.Item
 	json.Unmarshal(*resp.Source, &actual)
+	t.Logf("%+v", actual.Payload)
 
 	actualProfile, _ := model.FromJsonObj(
 		actual.Payload)
 	actual.Payload = actualProfile
+	t.Logf("%+v", actual.Payload)
 
 	if actual != profile {
 		t.Errorf("got %v;expected %v", actual, profile)

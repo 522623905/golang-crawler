@@ -10,7 +10,7 @@ type ConcurrentEngine struct {
 type Scheduler interface {
 	ReadyNotifier             //一个准备完毕并通知的接口
 	Submit(Request)           //递交请求给调度器
-	WorkerChan() chan Request //调度器返回request channel
+	WorkerChan() chan Request //调度器来生成worker channel
 	Run()                     //运行调度器
 }
 

@@ -17,6 +17,7 @@
         </a>
     </nav>
 
+<!--	点击search按钮后,提交get请求-->
     <form action="" method="get">
         <div class="input-group mb-3">
             <input type="text" name="q" class="form-control" placeholder="请输入关键字" aria-describedby="basic-addon2" value="{{.Query}}">
@@ -47,6 +48,7 @@
         </tr>
         </thead>
         <tbody>
+<!--		range为循环读取 .Items -->
         {{range .Items}}
         <tr>
             <td><a href="{{.Url}}" target="_blank">{{.Payload.Name}}</a></td>
@@ -64,6 +66,7 @@
             <td>{{.Car}}</td>
         {{end}}
         </tr>
+<!--		当.Items为空,则执行else-->
         {{else}}
         <tr><td colspan="11">没有找到记录</td></tr>
         {{end}}
@@ -72,11 +75,13 @@
 
     <nav aria-label="Page navigation example">
         <ul class="pagination">
+<!--		上一页-->
             {{if ge .PrevFrom 1}}
                 <li class="page-item"><a class="page-link" href="/search?q={{.Query}}&from={{.PrevFrom}}">Prev</a></li>
             {{else}}
                 <li class="page-item"><a class="page-link" href="javascript:void(0);">Prev</a></li>
             {{end}}
+<!--			下一页-->
             <li class="page-item"><a class="page-link" href="/search?q={{.Query}}&from={{.NextFrom}}">Next</a></li>
         </ul>
     </nav>

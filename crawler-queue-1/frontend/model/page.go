@@ -9,6 +9,6 @@ type SearchResult struct {
 	Query    string //获取参数内容
 	PrevFrom int    //上一页
 	NextFrom int    //下一页
-	//	Items    []engine.Item //具体的内容
+	//存放engine.Item
 	Items []interface{}
 }

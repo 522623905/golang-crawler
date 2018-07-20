@@ -7,7 +7,7 @@ type QueuedScheduler struct {
 	workerChan  chan chan engine.Request //表示workerChan是channel,对外传输的是chan engine.Request
 }
 
-//把request递交给调度器中的channel
+//由引擎把request递交给调度器中的channel
 func (s *QueuedScheduler) Submit(r engine.Request) {
 	go func() { s.requestChan <- r }()
 }

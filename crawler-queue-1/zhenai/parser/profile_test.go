@@ -10,7 +10,7 @@ import (
 )
 
 func TestParseProfile(t *testing.T) {
-	url := "http://albnum.zhenai.com/u/108739485"
+	url := "http://album.zhenai.com/u/108739485"
 	contents, err := ioutil.ReadFile("profile_test_data.html")
 	if err != nil {
 		panic(err)
@@ -22,7 +22,7 @@ func TestParseProfile(t *testing.T) {
 
 	actual := result.Items[0]
 	expected := engine.Item{
-		Url:  "http://albnum.zhenai.com/u/108739485",
+		Url:  "http://album.zhenai.com/u/108739485",
 		Type: "zhenai",
 		Id:   "108739485",
 		Payload: model.Profile{

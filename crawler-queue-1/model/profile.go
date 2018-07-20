@@ -6,7 +6,6 @@ import (
 
 //人物的个人信息数据
 type Profile struct {
-	//具体的人物信息
 	Name       string
 	Gender     string
 	Age        int

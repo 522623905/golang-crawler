@@ -31,6 +31,7 @@ func ItemSaver(index string) (chan engine.Item, error) {
 	//注意这里的操作,开启goroutine来阻塞等待out channel数据来写入elasticSearch
 	//而out channel被return回去给main,由main来进行数据的提取
 	go func() {
+		//记录数据个数
 		itemCount := 0
 		for {
 			//item阻塞等待out channel有数据

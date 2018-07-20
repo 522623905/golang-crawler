@@ -13,8 +13,6 @@ import (
 )
 
 func TestSearchResultView_Render(t *testing.T) {
-	//	template := template.Must(
-	//		template.ParseFiles("template.html"))
 	view := CreateSearchResultView("template.html")
 	out, err := os.Create("template.test.html")
 
